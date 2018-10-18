@@ -7,7 +7,7 @@ import { SurveysPage } from '../pages/surveys/surveys';
 import { SparkSurveyPage } from '../pages/spark-survey/spark-survey';
 import { SurveyPage } from '../pages/survey/survey';
 
-import { ApolloModule, APOLLO_OPTIONS } from "apollo-angular";
+import { ApolloModule, Apollo } from "apollo-angular";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -40,19 +40,16 @@ const GRAPHQL_URL = 'http://localhost:4466';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory(httpLink: HttpLink) {
-        return {
-          cache: new InMemoryCache(),
-          link: httpLink.create({
-            uri: GRAPHQL_URL
-          })
-        }
-      },
-      deps: [HttpLink]
-    }
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(apollo: Apollo, httpLink: HttpLink){
+    apollo.create({
+      link: httpLink.create({
+        uri: GRAPHQL_URL,
+      }),
+      cache: new InMemoryCache()
+    })
+  }
+}
