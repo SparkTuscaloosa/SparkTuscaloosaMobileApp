@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Surveys
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding id="page1">
+  <ion-list id="surveys-list2">
+    <ion-item color="none" id="surveys-list-item7" *ngFor="let survey of surveys">
+      <ion-thumbnail item-left>
+        <img />
+      </ion-thumbnail>
+      <h2>
+        {{survey.title}}
+      </h2>
+      <p>
+        {{survey.description}}
+      </p>
+      <button ion-button clear item-end on-click="goToSurvey(survey)">View</button>
+    </ion-item>
+  </ion-list>
+</ion-content>
