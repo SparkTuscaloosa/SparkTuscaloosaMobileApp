@@ -8,7 +8,6 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 export class SurveyPage {
   surveyData;
   constructor(public navCtrl: NavController, public navParams: NavParams, private fb: FormBuilder) {
-    console.log(navParams);
     this.surveyData = navParams.data;
   }
 }

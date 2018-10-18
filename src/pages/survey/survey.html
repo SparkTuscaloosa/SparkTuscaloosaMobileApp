@@ -1,12 +1,7 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons start>
-      <button ion-button icon-only>
-        <ion-icon name="arrow-back"></ion-icon>
-      </button>
-    </ion-buttons>
     <ion-title>
-      Survey
+      {{surveyData.title}}
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only>
@@ -16,7 +11,69 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page3">
-  <pre>
-    {{surveyData | json}}
-  </pre>
+  <div id="survey-container1" *ngFor="let item of surveyData.questions; let i = index">
+    <div id="survey-markdown1" class="show-list-numbers-and-dots">
+      <p style="color:#000000;">
+        <strong>
+          {{i + 1}}
+        </strong>
+        {{item.question}} .
+      </p>
+    </div>
+    <form id="survey-form3" *ngIf="item.type === 'MULTILINE'">
+      <ion-item id="survey-textarea1">
+        <ion-label>
+          Answer
+        </ion-label>
+        <ion-textarea placeholder=""></ion-textarea>
+      </ion-item>
+      <div class="spacer" style="width:300px;height:26px;" id="survey-spacer2"></div>
+    </form>
+    <form id="survey-form4" *ngIf="item.type === 'SINGLELINE'">
+      <ion-item id="survey-textarea3">
+        <ion-label>
+          Answer
+        </ion-label>
+        <ion-textarea placeholder=""></ion-textarea>
+      </ion-item>
+      <div class="spacer" style="width:300px;height:26px;" id="survey-spacer3"></div>
+    </form>
+    <form id="survey-form5" *ngIf="item.type === 'MULTISELECT'">
+      <ion-item id="survey-toggle{{i+1}}" *ngFor="let answer of item.answers; let i = index">
+        <ion-label>
+          {{answer.answer}}
+        </ion-label>
+        <ion-toggle color="positive" checked="false"></ion-toggle>
+      </ion-item>
+      <div class="spacer" style="width:300px;height:26px;" id="survey-spacer4"></div>
+    </form>
+    <form id="survey-form6" *ngIf="item.type === 'SINGLESELECT'">
+      <ion-item id="survey-radio{{i+1}}" *ngFor="let answer of item.answers; let i = index">
+        <ion-label>
+          {{answer.answer}}
+        </ion-label>
+        <ion-radio></ion-radio>
+      </ion-item>
+      <div class="spacer" style="width:300px;height:26px;" id="survey-spacer5"></div>
+    </form>
+    <form id="survey-form7" *ngIf="item.type === 'YESNO'">
+      <ion-item id="survey-checkbox1">
+        <ion-label>
+          Yes
+        </ion-label>
+        <ion-checkbox></ion-checkbox>
+      </ion-item>
+      <div class="spacer" style="width:300px;height:26px;" id="survey-spacer6"></div>
+    </form>
+    <form id="survey-form8" *ngIf="item.type === 'RANGE'">
+      <ion-item id="survey-range1">
+        <ion-range min="0" max="100" step="1" color="positive" value="50">
+          <ion-label range-left>
+            Range
+          </ion-label>
+        </ion-range>
+      </ion-item>
+      <div class="spacer" style="width:300px;height:26px;" id="survey-spacer7"></div>
+    </form>
+  </div>
 </ion-content>
