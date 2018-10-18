@@ -7,14 +7,15 @@ import { SurveysPage } from '../pages/surveys/surveys';
 import { SparkSurveyPage } from '../pages/spark-survey/spark-survey';
 import { SurveyPage } from '../pages/survey/survey';
 
-import { ApolloModule, APOLLO_OPTIONS } from "apollo-angular";
+import { ApolloModule, Apollo } from "apollo-angular";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { ReactiveFormsModule } from '@angular/forms';
 
-const GRAPHQL_URL = 'http://localhost:4466';
+const GRAPHQL_URL = 'https://us1.prisma.sh/tarakesh-gogi-98311c/mobile-app-backend/dev';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ const GRAPHQL_URL = 'http://localhost:4466';
     HttpClientModule,
     ApolloModule,
     HttpLinkModule,
+    ReactiveFormsModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -40,19 +42,16 @@ const GRAPHQL_URL = 'http://localhost:4466';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory(httpLink: HttpLink) {
-        return {
-          cache: new InMemoryCache(),
-          link: httpLink.create({
-            uri: GRAPHQL_URL
-          })
-        }
-      },
-      deps: [HttpLink]
-    }
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(apollo: Apollo, httpLink: HttpLink){
+    apollo.create({
+      link: httpLink.create({
+        uri: GRAPHQL_URL
+      }),
+      cache: new InMemoryCache()
+    })
+  }
+}

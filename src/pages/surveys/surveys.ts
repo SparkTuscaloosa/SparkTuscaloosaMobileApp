@@ -13,6 +13,14 @@ const SURVEY_QUERY = gql`
       id
       title
       description
+      questions {
+        id
+        type
+        question
+        answers {
+          answer
+        }
+      }
     }
   }
 `;
@@ -55,6 +63,6 @@ export class SurveysPage implements OnInit, OnDestroy {
 
   goToSurvey(params){
     if (!params) params = {};
-    this.navCtrl.push(SurveyPage);
+    this.navCtrl.push(SurveyPage, params);
   }
 }

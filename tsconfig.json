@@ -10,6 +10,7 @@
       "es2017",
       "esnext.asynciterable"
     ],
+    "skipLibCheck": true,
     "module": "es2015",
     "moduleResolution": "node",
     "sourceMap": true,
